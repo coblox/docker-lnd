@@ -27,10 +27,12 @@ EXPOSE 9735 10009
 COPY --from=builder /go/bin/lncli /bin/
 COPY --from=builder /go/bin/lnd /bin/
 
-# Add bash.
+# Add bash & curl.
 RUN apk add --no-cache \
-    bash
+    bash \
+    curl
 
 # Copy the entrypoint script.
 COPY start-lnd.sh .
+COPY wait-for-backend.sh .
 RUN chmod +x start-lnd.sh

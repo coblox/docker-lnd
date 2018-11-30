@@ -39,14 +39,13 @@ set_default() {
 }
 
 # Set default variables if needed.
-RPCUSER=$(set_default "$RPCUSER" "devuser")
-RPCPASS=$(set_default "$RPCPASS" "devpass")
 DEBUG=$(set_default "$DEBUG" "debug")
 NETWORK=$(set_default "$NETWORK" "simnet")
 CHAIN=$(set_default "$CHAIN" "bitcoin")
-BTCNODE=$(set_default "$BTCNODE" "btcd")
-BTCSERVER=$(set_default "$BTCSERVER" "localhost")
-BACKEND="btcd"
+BACKEND=$(set_default "$BACKEND" "btcd")
+BACKEND_RPC_USER=$(set_default "$BACKEND_RPC_USER" "devuser")
+BACKEND_RPC_PASS=$(set_default "$BACKEND_RPC_PASS" "devpass")
+BACKEND_RPC_HOST=$(set_default "$BACKEND_RPC_HOST" "localhost")
 if [[ "$CHAIN" == "litecoin" ]]; then
     BACKEND="ltcd"
 fi
@@ -56,10 +55,9 @@ exec lnd \
     --logdir="/data" \
     "--$CHAIN.active" \
     "--$CHAIN.$NETWORK" \
-    "--$CHAIN.node"="$BTCNODE" \
-    "--$BACKEND.rpccert"="/rpc/rpc.cert" \
-    "--$BACKEND.rpchost"="$BTCSERVER" \
-    "--$BACKEND.rpcuser"="$RPCUSER" \
-    "--$BACKEND.rpcpass"="$RPCPASS" \
+    "--$CHAIN.node"="$BACKEND" \
+    "--$BACKEND.rpchost"="$BACKEND_RPC_HOST" \
+    "--$BACKEND.rpcuser"="$BACKEND_RPC_USER" \
+    "--$BACKEND.rpcpass"="$BACKEND_RPC_PASS" \
     --debuglevel="$DEBUG" \
     "$@"
