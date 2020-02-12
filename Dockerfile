@@ -14,7 +14,7 @@ RUN go get -u github.com/golang/dep/cmd/dep
 RUN go get -d github.com/lightningnetwork/lnd
 RUN cd $GOPATH/src/github.com/lightningnetwork/lnd \
  && git checkout v0.9.0-beta \
- && make \
+ && make tags=invoicesrpc \
  && make install
 
 # Start a new, final image to reduce size.
