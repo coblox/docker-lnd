@@ -1,4 +1,4 @@
-FROM golang:1.10-alpine as builder
+FROM golang:1.13-alpine as builder
 
 MAINTAINER CoBloX Team <team@coblox.tech>
 
@@ -13,7 +13,7 @@ ENV GODEBUG netdns=cgo
 RUN go get -u github.com/golang/dep/cmd/dep
 RUN go get -d github.com/lightningnetwork/lnd
 RUN cd $GOPATH/src/github.com/lightningnetwork/lnd \
- && git checkout v0.5.1-beta \
+ && git checkout v0.9.0-beta \
  && make \
  && make install
 
